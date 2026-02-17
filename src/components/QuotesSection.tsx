@@ -1,7 +1,6 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 const quotes = [
   {
@@ -17,47 +16,6 @@ const quotes = [
     author: "Leonardo da Vinci",
   },
 ];
-
-function TypewriterText({ text, delay = 0 }: { text: string; delay?: number }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [displayedText, setDisplayedText] = useState(text);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    if (isInView && !isAnimating) {
-      setDisplayedText('');
-      setIsAnimating(true);
-      
-      const timer = setTimeout(() => {
-        let currentIndex = 0;
-        const interval = setInterval(() => {
-          currentIndex++;
-          if (currentIndex <= text.length) {
-            setDisplayedText(text.slice(0, currentIndex));
-          } else {
-            clearInterval(interval);
-          }
-        }, 35);
-      }, delay);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [isInView, text, delay, isAnimating]);
-
-  return (
-    <span ref={ref}>
-      {displayedText}
-      {isAnimating && displayedText.length < text.length && displayedText.length > 0 && (
-        <motion.span
-          animate={{ opacity: [1, 0] }}
-          transition={{ duration: 0.5, repeat: Infinity }}
-          className="inline-block w-0.5 h-6 bg-gold/60 ml-1 align-middle"
-        />
-      )}
-    </span>
-  );
-}
 
 export default function QuotesSection() {
   return (
@@ -105,7 +63,7 @@ export default function QuotesSection() {
                 
                 <div className="flex-1">
                   <p className="font-playfair text-2xl md:text-3xl lg:text-4xl text-charcoal leading-relaxed mb-6 italic">
-                    "<TypewriterText text={quote.text} delay={index * 800 + 500} />"
+                    "{quote.text}"
                   </p>
                   
                   <motion.div 
