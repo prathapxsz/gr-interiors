@@ -1,0 +1,54 @@
+---
+import FilterableGallery from './FilterableGallery';
+
+// Import all images from each category
+import B2 from '../assets/Bedroom/B-2.jpeg';
+import B5 from '../assets/Bedroom/B-5.jpeg';
+import B6 from '../assets/Bedroom/B-6.jpeg';
+import B7 from '../assets/Bedroom/B-7.jpeg';
+import B8 from '../assets/Bedroom/B-8.jpeg';
+import B3 from '../assets/Bedroom/B3.jpeg';
+import KLSCroc from '../assets/Bedroom/KLS-Croc.jpeg';
+
+import H4 from '../assets/Hall/H-4.jpeg';
+import H5 from '../assets/Hall/H5.jpeg';
+import H6 from '../assets/Hall/H6.jpeg';
+import H7 from '../assets/Hall/H7.jpeg';
+import Hall2 from '../assets/Hall/Hall-2.jpeg';
+import KLSHall from '../assets/Hall/KLS-Hall.jpeg';
+import Villa1Hall from '../assets/Hall/Villa-1-hall.jpeg';
+
+import K2 from '../assets/Kitchen/K-2.jpeg';
+import K1 from '../assets/Kitchen/K1.jpeg';
+import K3 from '../assets/Kitchen/K3.jpeg';
+
+import Pooja1 from '../assets/pooja/Pooja-1.jpeg';
+import Pooja2 from '../assets/pooja/Pooja-2.jpeg';
+
+const projects = [
+  { id: 1, title: 'Modern Bedroom', category: 'bedroom', image: B2.src },
+  { id: 2, title: 'Elegant Suite', category: 'bedroom', image: B5.src },
+  { id: 3, title: 'Cozy Retreat', category: 'bedroom', image: B6.src },
+  { id: 4, title: 'Master Bedroom', category: 'bedroom', image: B7.src },
+  { id: 5, title: 'Luxury Bedroom', category: 'bedroom', image: B8.src },
+  { id: 6, title: 'Classic Bedroom', category: 'bedroom', image: B3.src },
+  { id: 7, title: 'KLS Bedroom', category: 'bedroom', image: KLSCroc.src },
+  
+  { id: 8, title: 'Grand Hall', category: 'hall', image: H4.src },
+  { id: 9, title: 'Living Space', category: 'hall', image: H5.src },
+  { id: 10, title: 'Modern Hall', category: 'hall', image: H6.src },
+  { id: 11, title: 'Contemporary Hall', category: 'hall', image: H7.src },
+  { id: 12, title: 'Classic Hall', category: 'hall', image: Hall2.src },
+  { id: 13, title: 'KLS Hall', category: 'hall', image: KLSHall.src },
+  { id: 14, title: 'Villa Hall', category: 'hall', image: Villa1Hall.src },
+  
+  { id: 15, title: 'Modern Kitchen', category: 'kitchen', image: K2.src },
+  { id: 16, title: 'Elegant Kitchen', category: 'kitchen', image: K1.src },
+  { id: 17, title: 'Designer Kitchen', category: 'kitchen', image: K3.src },
+  
+  { id: 18, title: 'Pooja Room', category: 'pooja', image: Pooja1.src },
+  { id: 19, title: 'Sacred Space', category: 'pooja', image: Pooja2.src },
+];
+---
+
+<FilterableGallery client:visible projects={projects} />

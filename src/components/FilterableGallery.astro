@@ -1,0 +1,161 @@
+---
+import { Image } from 'astro:assets';
+
+// Import all images from each category
+import B2 from '../assets/Bedroom/B-2.jpeg';
+import B5 from '../assets/Bedroom/B-5.jpeg';
+import B6 from '../assets/Bedroom/B-6.jpeg';
+import B7 from '../assets/Bedroom/B-7.jpeg';
+import B8 from '../assets/Bedroom/B-8.jpeg';
+import B3 from '../assets/Bedroom/B3.jpeg';
+import KLSCroc from '../assets/Bedroom/KLS-Croc.jpeg';
+
+import H4 from '../assets/Hall/H-4.jpeg';
+import H5 from '../assets/Hall/H5.jpeg';
+import H6 from '../assets/Hall/H6.jpeg';
+import H7 from '../assets/Hall/H7.jpeg';
+import Hall2 from '../assets/Hall/Hall-2.jpeg';
+import KLSHall from '../assets/Hall/KLS-Hall.jpeg';
+import Villa1Hall from '../assets/Hall/Villa-1-hall.jpeg';
+
+import K2 from '../assets/Kitchen/K-2.jpeg';
+import K1 from '../assets/Kitchen/K1.jpeg';
+import K3 from '../assets/Kitchen/K3.jpeg';
+
+import Pooja1 from '../assets/pooja/Pooja-1.jpeg';
+import Pooja2 from '../assets/pooja/Pooja-2.jpeg';
+
+const projects = [
+  { id: 1, title: 'Modern Bedroom', category: 'bedroom', image: B2 },
+  { id: 2, title: 'Elegant Suite', category: 'bedroom', image: B5 },
+  { id: 3, title: 'Cozy Retreat', category: 'bedroom', image: B6 },
+  { id: 4, title: 'Master Bedroom', category: 'bedroom', image: B7 },
+  { id: 5, title: 'Luxury Bedroom', category: 'bedroom', image: B8 },
+  { id: 6, title: 'Classic Bedroom', category: 'bedroom', image: B3 },
+  { id: 7, title: 'KLS Bedroom', category: 'bedroom', image: KLSCroc },
+  
+  { id: 8, title: 'Grand Hall', category: 'hall', image: H4 },
+  { id: 9, title: 'Living Space', category: 'hall', image: H5 },
+  { id: 10, title: 'Modern Hall', category: 'hall', image: H6 },
+  { id: 11, title: 'Contemporary Hall', category: 'hall', image: H7 },
+  { id: 12, title: 'Classic Hall', category: 'hall', image: Hall2 },
+  { id: 13, title: 'KLS Hall', category: 'hall', image: KLSHall },
+  { id: 14, title: 'Villa Hall', category: 'hall', image: Villa1Hall },
+  
+  { id: 15, title: 'Modern Kitchen', category: 'kitchen', image: K2 },
+  { id: 16, title: 'Elegant Kitchen', category: 'kitchen', image: K1 },
+  { id: 17, title: 'Designer Kitchen', category: 'kitchen', image: K3 },
+  
+  { id: 18, title: 'Pooja Room', category: 'pooja', image: Pooja1 },
+  { id: 19, title: 'Sacred Space', category: 'pooja', image: Pooja2 },
+];
+
+const categories = ['all', 'bedroom', 'hall', 'kitchen', 'pooja'];
+---
+
+<section id="projects" class="py-24 md:py-32 bg-cream">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <p class="text-gold text-sm tracking-[0.3em] uppercase mb-4">Portfolio</p>
+      <h2 class="font-playfair text-4xl md:text-5xl lg:text-6xl text-charcoal mb-8">
+        Our Projects
+      </h2>
+      
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap justify-center gap-3 md:gap-4">
+        {categories.map((cat) => (
+          <button
+            data-filter={cat}
+            class="filter-btn px-6 py-2.5 text-sm tracking-wider uppercase border border-charcoal/20 text-warm-gray hover:border-gold hover:text-gold transition-all duration-300 data-[active=true]:bg-charcoal data-[active=true]:text-cream data-[active=true]:border-charcoal"
+          >
+            {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      {projects.map((project) => (
+        <div
+          class="gallery-item group relative overflow-hidden aspect-[4/3] cursor-pointer"
+          data-category={project.category}
+        >
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={600}
+            height={450}
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+            <h3 class="font-playfair text-xl md:text-2xl text-cream mb-1">
+              {project.title}
+            </h3>
+            <p class="text-gold text-sm capitalize">{project.category}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    
+    // Set initial active state
+    const allBtn = document.querySelector('[data-filter="all"]');
+    if (allBtn) allBtn.setAttribute('data-active', 'true');
+    
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+        
+        // Update active state
+        filterBtns.forEach(b => b.setAttribute('data-active', 'false'));
+        btn.setAttribute('data-active', 'true');
+        
+        // Filter items with animation
+        galleryItems.forEach((item, index) => {
+          const category = item.getAttribute('data-category');
+          const shouldShow = filter === 'all' || category === filter;
+          
+          if (shouldShow) {
+            item.classList.remove('hidden');
+            item.style.opacity = '0';
+            item.style.transform = 'scale(0.8) translateY(20px)';
+            
+            setTimeout(() => {
+              item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+              item.style.opacity = '1';
+              item.style.transform = 'scale(1) translateY(0)';
+            }, index * 50);
+          } else {
+            item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            item.style.opacity = '0';
+            item.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+              item.classList.add('hidden');
+            }, 300);
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .gallery-item {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  .gallery-item.hidden {
+    display: none;
+  }
+</style>

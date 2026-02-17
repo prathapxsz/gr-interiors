@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero';
+import GalleryWrapper from '../components/GalleryWrapper.astro';
+import QuotesSection from '../components/QuotesSection';
+import ContactForm from '../components/ContactForm';
+---
+
+<Layout title="GR | Luxury Interiors Studio">
+  <Hero client:load />
+  <GalleryWrapper />
+  <QuotesSection client:visible />
+  <ContactForm client:visible />
+</Layout>

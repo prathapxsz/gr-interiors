@@ -1,0 +1,119 @@
+---
+import { Image } from 'astro:assets';
+
+const projects = [
+  {
+    id: 1,
+    title: 'Penthouse Suite',
+    location: 'Manhattan, NY',
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053&auto=format&fit=crop',
+    span: 'md:col-span-2 md:row-span-2',
+  },
+  {
+    id: 2,
+    title: 'Modern Villa',
+    location: 'Beverly Hills, CA',
+    image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=2070&auto=format&fit=crop',
+    span: '',
+  },
+  {
+    id: 3,
+    title: 'Coastal Retreat',
+    location: 'Malibu, CA',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop',
+    span: '',
+  },
+  {
+    id: 4,
+    title: 'Urban Loft',
+    location: 'Brooklyn, NY',
+    image: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=2070&auto=format&fit=crop',
+    span: 'md:row-span-2',
+  },
+  {
+    id: 5,
+    title: 'Minimalist Home',
+    location: 'San Francisco, CA',
+    image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=2084&auto=format&fit=crop',
+    span: '',
+  },
+  {
+    id: 6,
+    title: 'Classic Estate',
+    location: 'Greenwich, CT',
+    image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?q=80&w=2070&auto=format&fit=crop',
+    span: 'md:col-span-2',
+  },
+];
+---
+
+<section id="projects" class="py-24 md:py-32 bg-cream">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 animate-fade-in">
+      <p class="text-gold text-sm tracking-[0.3em] uppercase mb-4">Portfolio</p>
+      <h2 class="font-playfair text-4xl md:text-5xl lg:text-6xl text-charcoal">
+        Selected Works
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[280px] md:auto-rows-[250px]">
+      {projects.map((project, index) => (
+        <div 
+          class={`gallery-item group relative overflow-hidden cursor-pointer ${project.span}`}
+          style={`animation-delay: ${index * 0.15}s`}
+        >
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={800}
+            height={600}
+            class="gallery-image w-full h-full object-cover"
+            loading={index < 2 ? "eager" : "lazy"}
+            decoding="async"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+            <h3 class="font-playfair text-xl md:text-2xl text-cream mb-1">
+              {project.title}
+            </h3>
+            <p class="text-cream/70 text-sm">{project.location}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery-item {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .gallery-image {
+    transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .group:hover .gallery-image {
+    transform: scale(1.08);
+  }
+
+  .animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+</style>
