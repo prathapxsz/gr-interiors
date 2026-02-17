@@ -7,6 +7,9 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://prathapxsz.github.io',
+  base: '/gr-interiors',
+
   vite: {
     plugins: [tailwindcss()]
   },
