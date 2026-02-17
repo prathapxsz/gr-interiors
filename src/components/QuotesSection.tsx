@@ -19,40 +19,36 @@ const quotes = [
 ];
 
 function TypewriterText({ text, delay = 0 }: { text: string; delay?: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [displayedText, setDisplayedText] = useState('');
-  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const [displayedText, setDisplayedText] = useState(text);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    if (isInView && !started) {
+    if (isInView && !isAnimating) {
+      setDisplayedText('');
+      setIsAnimating(true);
+      
       const timer = setTimeout(() => {
-        setStarted(true);
+        let currentIndex = 0;
+        const interval = setInterval(() => {
+          currentIndex++;
+          if (currentIndex <= text.length) {
+            setDisplayedText(text.slice(0, currentIndex));
+          } else {
+            clearInterval(interval);
+          }
+        }, 35);
       }, delay);
+      
       return () => clearTimeout(timer);
     }
-  }, [isInView, delay, started]);
-
-  useEffect(() => {
-    if (!started) return;
-    
-    let currentIndex = 0;
-    const interval = setInterval(() => {
-      if (currentIndex <= text.length) {
-        setDisplayedText(text.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 35);
-
-    return () => clearInterval(interval);
-  }, [started, text]);
+  }, [isInView, text, delay, isAnimating]);
 
   return (
     <span ref={ref}>
       {displayedText}
-      {started && displayedText.length < text.length && (
+      {isAnimating && displayedText.length < text.length && displayedText.length > 0 && (
         <motion.span
           animate={{ opacity: [1, 0] }}
           transition={{ duration: 0.5, repeat: Infinity }}
